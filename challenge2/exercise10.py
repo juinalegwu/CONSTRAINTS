@@ -1,11 +1,31 @@
-from collection import deque
+def path_exists(graph, start, target, visited=None):
+    if visited is None:
+        visited = set()
 
-def path_exists(graph, start, target):
     if start == target:
         return True
 
-    for neighbor in graph.get(start, []):
-        if path_exists(graph, neighbor, target):
+    if start in visited:
+        return False
+
+    visited.add(start)
+
+    for neighbour in graph.get(start, []):
+        if path_exists(graph, neighbour, target, visited):
             return True
 
     return False
+
+
+graph = {
+    "A": ["B", "C"],
+    "B": ["D"],
+    "C": ["E"],
+    "D": [],
+    "E": ["F"],
+    "F": []
+}
+
+print(path_exists(graph, "A", "F"))   
+print(path_exists(graph, "D", "A"))  
+ 
